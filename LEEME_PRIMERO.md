@@ -75,22 +75,6 @@ Las pistas aparecen a los 90, 180 y 300 segundos de pulsar **YA ESTAMOS EN LA ES
 
 Errores: bloqueo 10, 20 y 30 s a partir del primer, segundo y tercer fallo consecutivos. El bloqueo persiste al recargar. Tras superar / saltar la prueba se reinicia.
 
-## 9. ENSAYO ANTES DEL VIERNES
-
-**Comprueba estos diez casos** en un móvil conectado a la red que se usará realmente:
-
-- [ ] La web abre por HTTPS con el QR.
-- [ ] Los seis equipos reciben una primera ubicación distinta.
-- [ ] Los 14 vídeos se pueden reproducir (incluido `final_SUB_GITHUB.mp4`).
-- [ ] Los botones para continuar vídeo funcionan si el navegador no reproduce automáticamente.
-- [ ] Los acertijos llevan a las estaciones correctas y los materiales están visibles.
-- [ ] Contraseña correcta para cada estación, especialmente `67` y `5173`.
-- [ ] Minuto de recepción: comparar reloj físico y móvil y ajustar el desfase.
-- [ ] Fallos consecutivos 10 / 20 / 30 s, y la penalización continúa tras recargar.
-- [ ] Pistas a los 90 / 180 / 300 s y salto a los 360 s.
-- [ ] Al faltar poco tiempo la web no asigna nuevas estaciones y muestra el desenlace.
-
-**Cómo ensayar de forma rápida:** puedes reducir temporalmente los segundos de pistas y salto en `config.js`; recuerda volver a `[90,180,300]` y `360` antes del evento.
 
 ## 10. PROBLEMAS TÍPICOS
 
