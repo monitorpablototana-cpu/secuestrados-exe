@@ -105,8 +105,10 @@
     return `<div class="media-frame">
       <div class="media-stage">
         <video playsinline webkit-playsinline preload="metadata" disablepictureinpicture disableremoteplayback aria-label="Transmisión de ROOT"></video>
-        <button type="button" class="cinema-close" aria-label="Salir del modo cine">✕ SALIR DEL MODO CINE</button>
-        <button type="button" class="cinema-play">▶ REPRODUCIR</button>
+        <div class="cinema-toolbar" role="group" aria-label="Controles del modo cine">
+          <button type="button" class="cinema-toggle" aria-label="Reproducir o pausar">▶ REPRODUCIR</button>
+          <button type="button" class="cinema-close" aria-label="Salir del modo cine">✕ SALIR</button>
+        </div>
       </div>
       <div class="media-actions">
         <button type="button" class="btn media-play">▶ REPRODUCIR</button>
@@ -122,12 +124,23 @@
     const playBtn=container.querySelector('.media-play');
     const cinemaBtn=container.querySelector('.media-cinema');
     const closeBtn=container.querySelector('.cinema-close');
-    const cinemaPlay=container.querySelector('.cinema-play');
+    const cinemaToggle=container.querySelector('.cinema-toggle');
     const message=container.querySelector('.media-status');
     const errorPanel=container.querySelector('.media-error');
     let disposed=false;
     let i=Math.max(0,Math.min(files.length-1,Number(options.startIndex)||0));
     let failed=false;
+    let hudTimer=null;
+    function hideHudTimer() {if(hudTimer!==null){clearTimeout(hudTimer);hudTimer=null;}}
+    function showHud(autoHide=true) {
+      if(disposed || !frame.classList.contains('cinema'))return;
+      hideHudTimer();
+      frame.classList.add('hud-visible');
+      if(autoHide && !video.paused && !video.ended) {
+        hudTimer=setTimeout(()=>{hudTimer=null;if(!disposed && !video.paused && !video.ended)frame.classList.remove('hud-visible');},2600);
+      }
+    }
+    function syncHud() {if(video.paused || video.ended)showHud(false);else showHud(true);}
     function label(text) {message.textContent=text;}
     function showError() {
       failed=true;
@@ -153,33 +166,37 @@
       video.src=videoFile(files[i]);
       video.load();
       playBtn.textContent='▶ REPRODUCIR';
-      cinemaPlay.textContent='▶ REPRODUCIR';
+      cinemaToggle.textContent='▶ REPRODUCIR';
+      syncHud();
       label('Pulsa REPRODUCIR para continuar.');
     }
     function cinema(on) {
       frame.classList.toggle('cinema',on);
       document.body.classList.toggle('cinema-active',on);
       cinemaBtn.textContent=on?'↙ VISTA NORMAL':'⛶ MODO CINE';
+      hideHudTimer();
+      frame.classList.toggle('hud-visible',on);
+      if(on)syncHud();
     }
     function refreshPlayButton() {
       const txt=video.paused?'▶ REPRODUCIR':'Ⅱ PAUSAR';
-      playBtn.textContent=txt;cinemaPlay.textContent=txt;
+      playBtn.textContent=txt;cinemaToggle.textContent=txt;cinemaToggle.setAttribute('aria-label',video.paused?'Reproducir vídeo':'Pausar vídeo');
     }
     async function playback() {
       if (disposed||failed)return;
       try {
         const promise=video.play();
         if (promise && typeof promise.then==='function') await promise;
-        if (!disposed) {refreshPlayButton();label('Señal recibida.');}
+        if (!disposed) {refreshPlayButton();syncHud();label('Señal recibida.');}
       } catch {
-        if(!disposed) {refreshPlayButton();label('Toca REPRODUCIR para continuar la transmisión.');}
+        if(!disposed) {refreshPlayButton();syncHud();label('Toca REPRODUCIR para continuar la transmisión.');}
       }
     }
     function toggle() {
       if(disposed)return;
       if (failed) {source();playback();return;}
       if(video.paused||video.ended) {if(video.ended)video.currentTime=0;playback();}
-      else {video.pause();refreshPlayButton();label('Transmisión en pausa.');}
+      else {video.pause();refreshPlayButton();syncHud();label('Transmisión en pausa.');}
     }
     function finishPlayer() {
       if(disposed)return;
@@ -198,10 +215,17 @@
       } else finishPlayer();
     }
     playBtn.addEventListener('click',toggle);
-    cinemaPlay.addEventListener('click',toggle);
-    video.addEventListener('click',toggle);
+    cinemaToggle.addEventListener('click',e=>{e.stopPropagation();toggle();});
+    // En modo cine tocar la imagen solo revela los controles EN LA PARTE SUPERIOR.
+    // No pausamos de golpe al intentar localizar el botón de salir.
+    video.addEventListener('click',()=>{
+      if(frame.classList.contains('cinema'))showHud(!video.paused);
+      else toggle();
+    });
+    frame.addEventListener('click',e=>{if(e.target===frame && frame.classList.contains('cinema'))showHud(!video.paused);});
+    frame.addEventListener('mousemove',()=>{if(frame.classList.contains('cinema'))showHud(!video.paused);});
     cinemaBtn.addEventListener('click',()=>cinema(!frame.classList.contains('cinema')));
-    closeBtn.addEventListener('click',()=>cinema(false));
+    closeBtn.addEventListener('click',e=>{e.stopPropagation();cinema(false);});
     video.addEventListener('loadedmetadata',()=>{
       if(disposed || !video.videoWidth || !video.videoHeight)return;
       // Adaptamos el marco al formato REAL del MP4 sin aplicar zoom.
@@ -209,16 +233,16 @@
     });
     video.addEventListener('ended',()=>{
       refreshPlayButton();
-      if(options.kind==='sequence')advance();else {label('Fin del mensaje. Puedes repetirlo o volver a la fase.');if(options.onFinish)options.onFinish();}
+      if(options.kind==='sequence')advance();else {syncHud();label('Fin del mensaje. Puedes repetirlo o volver a la fase.');if(options.onFinish)options.onFinish();}
     });
     video.addEventListener('error',()=>{if(!disposed)showError();});
     video.addEventListener('waiting',()=>{if(!disposed && !video.paused)label('Recuperando señal…');});
-    video.addEventListener('playing',()=>{if(!disposed){refreshPlayButton();label('Señal recibida.');}});
-    video.addEventListener('pause',()=>{if(!disposed)refreshPlayButton();});
+    video.addEventListener('playing',()=>{if(!disposed){refreshPlayButton();syncHud();label('Señal recibida.');}});
+    video.addEventListener('pause',()=>{if(!disposed){refreshPlayButton();syncHud();}});
     source();
     return {
       start(){return playback();},
-      dispose(){disposed=true;video.pause();video.removeAttribute('src');video.load();cinema(false);},
+      dispose(){hideHudTimer();disposed=true;video.pause();video.removeAttribute('src');video.load();cinema(false);},
       skipForTest(){advance();}
     };
   }

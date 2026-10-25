@@ -25,10 +25,17 @@ button:disabled { cursor:not-allowed; opacity:.5; transform:none; }
 .media-fallback strong{color:var(--yellow)}
 .media-stage.cinema{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;aspect-ratio:auto!important;max-width:none!important;max-height:none!important;z-index:9998!important;border:0!important;border-radius:0!important;background:#000!important;padding:0!important}
 .media-stage.cinema video{width:100%!important;height:100%!important;max-height:none!important;max-width:none!important;object-fit:contain!important;object-position:center!important}
-.media-stage .cinema-close{display:none;position:absolute;right:max(12px,env(safe-area-inset-right));top:max(12px,env(safe-area-inset-top));z-index:10001;border:1px solid #79808b;border-radius:8px;background:#19212dcc;color:#fff;padding:9px 12px;font:inherit;font-weight:bold;cursor:pointer}
-.media-stage.cinema .cinema-close{display:block}
-.media-stage .cinema-play{display:none;position:absolute;bottom:max(15px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:10001;border:1px solid #8a939b;background:#131d2cee;color:#fff;border-radius:12px;padding:12px 21px;font:inherit;font-size:.96rem;min-width:170px;cursor:pointer;white-space:nowrap}
-.media-stage.cinema .cinema-play{display:block}
+.media-stage .cinema-toolbar{display:none;position:absolute;top:0;left:0;right:0;z-index:10001;
+  padding:calc(10px + env(safe-area-inset-top)) calc(12px + env(safe-area-inset-right)) 16px calc(12px + env(safe-area-inset-left));
+  justify-content:space-between;align-items:center;gap:12px;
+  background:linear-gradient(to bottom,#000b 0%,#0009 65%,transparent 100%);
+  opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.media-stage.cinema .cinema-toolbar{display:flex}
+.media-stage.cinema.hud-visible .cinema-toolbar{opacity:1;pointer-events:auto}
+.media-stage .cinema-toggle,.media-stage .cinema-close{min-height:44px;min-width:44px;border:1px solid #718092;
+  border-radius:9px;background:#182232e8;color:white;padding:10px 13px;font:inherit;font-weight:700;
+  font-size:.86rem;cursor:pointer;white-space:nowrap;touch-action:manipulation}
+.media-stage .cinema-toolbar button:focus-visible{outline:3px solid var(--green);outline-offset:2px}
 body.cinema-active{overflow:hidden!important}
 /* Repetir destino sin desmontar la prueba ni reiniciar pistas o bloqueos. */
 #modal-root:empty{display:none}
