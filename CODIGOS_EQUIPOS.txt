@@ -1,23 +1,20 @@
-SECUESTRADOS.EXE — CÓDIGOS DE ACCESO PARA EL PROFESOR
+SECUESTRADOS.EXE — CÓDIGOS PARA EL PROFESOR
 
-CIFRAS: [1=60min / 2=120min] [Nº máximo de pruebas 2-6] [posición inicial del equipo 1-6] [control = suma de tres primeras cifras, módulo 10]
+1ª cifra: 1=60 min, 2=120 min. 2ª: 2 a 6 pruebas. 3ª: posición inicial 1 a 6. 4ª: suma módulo 10.
 
-IMPORTANTE: la tercera cifra es POSICIÓN EN LA RUTA ALEATORIA, no estación física.
-Máximo seis equipos por tanda: usa las seis posiciones sin repetir.
+NO ASIGNAR DOS VECES LA MISMA TERCERA CIFRA EN UNA TANDA.
 
-Ejemplo: para 1 hora y 6 pruebas: 1618, 1629, 1630, 1641, 1652, 1663.
+DURACIÓN: 60 MIN
+Hasta 2 pruebas: 1214 · 1225 · 1236 · 1247 · 1258 · 1269
+Hasta 3 pruebas: 1315 · 1326 · 1337 · 1348 · 1359 · 1360
+Hasta 4 pruebas: 1416 · 1427 · 1438 · 1449 · 1450 · 1461
+Hasta 5 pruebas: 1517 · 1528 · 1539 · 1540 · 1551 · 1562
+Hasta 6 pruebas: 1618 · 1629 · 1630 · 1641 · 1652 · 1663
 
-PARTIDAS DE 60 MINUTOS
-  Hasta 2 pruebas: Equipo 1: 1214 · Equipo 2: 1225 · Equipo 3: 1236 · Equipo 4: 1247 · Equipo 5: 1258 · Equipo 6: 1269
-  Hasta 3 pruebas: Equipo 1: 1315 · Equipo 2: 1326 · Equipo 3: 1337 · Equipo 4: 1348 · Equipo 5: 1359 · Equipo 6: 1360
-  Hasta 4 pruebas: Equipo 1: 1416 · Equipo 2: 1427 · Equipo 3: 1438 · Equipo 4: 1449 · Equipo 5: 1450 · Equipo 6: 1461
-  Hasta 5 pruebas: Equipo 1: 1517 · Equipo 2: 1528 · Equipo 3: 1539 · Equipo 4: 1540 · Equipo 5: 1551 · Equipo 6: 1562
-  Hasta 6 pruebas: Equipo 1: 1618 · Equipo 2: 1629 · Equipo 3: 1630 · Equipo 4: 1641 · Equipo 5: 1652 · Equipo 6: 1663
-
-PARTIDAS DE 120 MINUTOS
-  Hasta 2 pruebas: Equipo 1: 2215 · Equipo 2: 2226 · Equipo 3: 2237 · Equipo 4: 2248 · Equipo 5: 2259 · Equipo 6: 2260
-  Hasta 3 pruebas: Equipo 1: 2316 · Equipo 2: 2327 · Equipo 3: 2338 · Equipo 4: 2349 · Equipo 5: 2350 · Equipo 6: 2361
-  Hasta 4 pruebas: Equipo 1: 2417 · Equipo 2: 2428 · Equipo 3: 2439 · Equipo 4: 2440 · Equipo 5: 2451 · Equipo 6: 2462
-  Hasta 5 pruebas: Equipo 1: 2518 · Equipo 2: 2529 · Equipo 3: 2530 · Equipo 4: 2541 · Equipo 5: 2552 · Equipo 6: 2563
-  Hasta 6 pruebas: Equipo 1: 2619 · Equipo 2: 2620 · Equipo 3: 2631 · Equipo 4: 2642 · Equipo 5: 2653 · Equipo 6: 2664
+DURACIÓN: 120 MIN
+Hasta 2 pruebas: 2215 · 2226 · 2237 · 2248 · 2259 · 2260
+Hasta 3 pruebas: 2316 · 2327 · 2338 · 2349 · 2350 · 2361
+Hasta 4 pruebas: 2417 · 2428 · 2439 · 2440 · 2451 · 2462
+Hasta 5 pruebas: 2518 · 2529 · 2530 · 2541 · 2552 · 2563
+Hasta 6 pruebas: 2619 · 2620 · 2631 · 2642 · 2653 · 2664
 
